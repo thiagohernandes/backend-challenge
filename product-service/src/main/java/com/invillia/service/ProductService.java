@@ -32,4 +32,5 @@ public class ProductService {
 	public List<Product> productsByListIds(List<Integer> ids) {
 		return produtoRepository.consultaProductsByIds(ids);
 	}
+	
 }

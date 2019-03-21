@@ -1,5 +1,6 @@
 package com.invillia.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,6 +91,10 @@ public class OrderService {
 			}
 		} 		
 		return order.isPresent() ? order : null;
+	}
+	
+	public void updateOrderConfirmationDate(Date dateConfirmation, Integer idOrder) {
+		orderRepository.updateConfirmationOrder(util.handleDateTemporal(dateConfirmation.getTime()), idOrder);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.invillia.controller;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,12 @@ public class OrderController {
 	@PostMapping("/new")
 	public void novo(@RequestBody Order order) {
 		orderService.saveUpdateOrder(order);
+	}
+	
+	@ResponseBody
+	@PutMapping(value="/confirm/{id}")
+	public void confirmOrder(@PathVariable("id") Integer id, @RequestBody Date dateConfirmation) {
+		orderService.updateOrderConfirmationDate(dateConfirmation, id);
 	}
 
 }
