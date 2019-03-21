@@ -1,0 +1,18 @@
+server:
+  port: 8090
+  
+order-service:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: localhost:8090
+business-service:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: localhost:8091
+product-service:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: localhost:8092

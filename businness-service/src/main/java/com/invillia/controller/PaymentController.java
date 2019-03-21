@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.invillia.model.Payment;
-import com.invillia.repository.PaymentRepository;
+import com.invillia.service.PaymentService;
 
 /*
- * REST Controller Payment
+ * REST Payment Controller
  * @since 20-03-2019
  * @author: Thiago Hernandes de Souza
  * */
@@ -23,15 +23,15 @@ import com.invillia.repository.PaymentRepository;
 public class PaymentController {
 
 	@Autowired
-	PaymentRepository paymentRepository;
+	PaymentService PaymentService;
 	
 	@GetMapping(value="/all")
-	public List<Payment> todos(){
-		return paymentRepository.findAll();
+	public List<Payment> allPayments(){
+		return PaymentService.allPayments();
 	}
 	
 	@GetMapping(value="/{id}")
-	public Optional<Payment> produtoById(@PathVariable Integer id){
-		return paymentRepository.findById(id);
+	public Optional<Payment> paymentById(@PathVariable Integer id){
+		return PaymentService.paymentById(id);
 	}
 }

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.invillia.model.Product;
-import com.invillia.repository.ProductRepository;
+import com.invillia.service.ProductService;
 
 /*
- * REST Controller Product
+ * REST Product Controller
  * @since 20-03-2019
  * @author: Thiago Hernandes de Souza
  * */
@@ -23,16 +23,16 @@ import com.invillia.repository.ProductRepository;
 public class ProductController {
 	
 	@Autowired
-	ProductRepository produtoRepository;
+	ProductService productService;
 	
 	@GetMapping(value="/all")
-	public List<Product> todos(){
-		return produtoRepository.findAll();
+	public List<Product> allProducts(){
+		return productService.allProducts();
 	}
 	
 	@GetMapping(value="/{id}")
-	public Optional<Product> produtoById(@PathVariable Integer id){
-		return produtoRepository.findById(id);
+	public Optional<Product> productById(@PathVariable Integer id){
+		return productService.productById(id);
 	}
 	
 }

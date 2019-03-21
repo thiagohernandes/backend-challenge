@@ -7,8 +7,8 @@ zuul:
     order:
       path: /order/**
       url: http://localhost:8090
-    businness:
-      path: /businness/**
+    business:
+      path: /business/**
       url: http://localhost:8091
     product:
       path: /product/**

@@ -17,7 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.client.RestTemplate;
 
 /*
- * App Main - Business Service
+ * App Main - Order Service
  * @since 20-03-2019
  * @author: Thiago Hernandes de Souza
  * */
@@ -27,10 +27,10 @@ import org.springframework.web.client.RestTemplate;
 @EntityScan("com.invillia.model")
 @EnableJpaRepositories("com.invillia.repository")
 @RibbonClients({
-	@RibbonClient(name = "order-service"),
+	@RibbonClient(name = "business-service"),
 	@RibbonClient(name = "product-service")
 })
-public class AppBusiness {
+public class AppOrder {
 
 	@LoadBalanced
 	@Bean
@@ -44,7 +44,7 @@ public class AppBusiness {
     }
 	
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(AppBusiness.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(AppOrder.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }
