@@ -34,6 +34,7 @@
 		<module>businness-service</module>
 		<module>product-service</module>
 		<module>gateway-service</module>
+		<module>eureka-server</module>
 	</modules>
 
 </project>
