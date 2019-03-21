@@ -1,6 +1,7 @@
 package com.invillia.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,12 +24,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(schema="public", name="tbl_order")
 @JsonInclude(Include.ALWAYS)
-@SequenceGenerator(name="seq-gen-order", allocationSize=1)
 public class Order {
 
 	@Id
-	@SequenceGenerator(name="seq-gen-order",sequenceName="tbl_order_id_seq")
-	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seq-gen-order")
+	@SequenceGenerator(name = "tbl_order_id_seq", sequenceName = "tbl_order_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tbl_order_id_seq")
 	private Integer id;
 	@Column(name = "buy_date")
 	private Date buyDate;
@@ -41,6 +41,10 @@ public class Order {
 	private Integer idPayment;
 	@Transient
 	private Store store;
+	@Transient
+	private Payment payment;
+	@Transient
+	private List<OrderItem> itens;
 	
 	public Order(Date buyDate, String status, Integer idStore, Integer idPayment) {
 		this.buyDate = buyDate;
@@ -49,12 +53,15 @@ public class Order {
 		this.idPayment = idPayment;
 	}
 	
-	public Order(Date buyDate, Date confirmationDate, String status, Integer idStore, Integer idPayment) {
+	public Order(Integer id, Date buyDate, Date confirmationDate, 
+				 String status, Integer idStore, Integer idPayment, List<OrderItem> itens) {
+		this.id = id;
 		this.buyDate = buyDate;
 		this.confirmationDate = confirmationDate;
 		this.status = status;
 		this.idStore = idStore;
 		this.idPayment = idPayment;
+		this.itens = itens;
 	}
 	
 	public Order() {
@@ -115,5 +122,21 @@ public class Order {
 
 	public void setStore(Store store) {
 		this.store = store;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
+	public List<OrderItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<OrderItem> itens) {
+		this.itens = itens;
 	}
 }

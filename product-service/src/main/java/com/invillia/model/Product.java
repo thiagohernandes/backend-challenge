@@ -19,12 +19,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(schema="public", name="tbl_product")
 @JsonInclude(Include.ALWAYS)
-@SequenceGenerator(name="seq-gen", allocationSize=1)
 public class Product {
 	
 	@Id
-	@SequenceGenerator(name="seq-gen",sequenceName="tbl_product_id_seq")
-	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seq-gen")
+	@SequenceGenerator(name = "tbl_product_id_seq", sequenceName = "tbl_product_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tbl_product_id_seq")
 	private Integer id;
 	private String description;
 	private Double price;

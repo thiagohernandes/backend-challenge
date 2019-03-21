@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -20,23 +21,34 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(schema="public", name="tbl_order_item")
 @JsonInclude(Include.ALWAYS)
-@SequenceGenerator(name="seq-gen-item", allocationSize=1)
 public class OrderItem {
 
 	@Id
-	@SequenceGenerator(name="seq-gen-item",sequenceName="tbl_order_item_id_seq")
-	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator="seq-gen-item")
+	@SequenceGenerator(name = "tbl_order_item_id_seq", sequenceName = "tbl_order_item_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tbl_order_item_id_seq")
 	private Integer id;
 	@Column(name = "id_order")
 	private Integer idOrder;
 	@Column(name = "id_product")
 	private Integer idProduct;
 	private int quantity;
+	private Double price;
+	@Transient
+	private String descriptionProduct;
 	
-	public OrderItem(Integer idOrder, Integer idProduct, int quantity) {
+	public OrderItem(Integer idOrder, Integer idProduct, int quantity, Double price, String descriptionProduct) {
 		this.idOrder = idOrder;
 		this.idProduct = idProduct;
 		this.quantity = quantity;
+		this.price = price;
+		this.descriptionProduct = descriptionProduct;
+	}
+	
+	public OrderItem(Integer idOrder, Integer idProduct, int quantity, Double price) {
+		this.idOrder = idOrder;
+		this.idProduct = idProduct;
+		this.quantity = quantity;
+		this.price = price;
 	}
 	
 	public OrderItem() {
@@ -73,5 +85,21 @@ public class OrderItem {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getDescriptionProduct() {
+		return descriptionProduct;
+	}
+
+	public void setDescriptionProduct(String descriptionProduct) {
+		this.descriptionProduct = descriptionProduct;
 	}
 }

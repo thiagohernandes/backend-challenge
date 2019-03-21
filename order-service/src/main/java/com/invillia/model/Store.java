@@ -1,7 +1,7 @@
 package com.invillia.model;
 
 /*
- * Model - Store
+ * Model DTO - Store
  * @since 20-03-2019
  * @author: Thiago Hernandes de Souza
  * */
