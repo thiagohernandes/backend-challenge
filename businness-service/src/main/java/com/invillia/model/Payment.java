@@ -32,6 +32,11 @@ public class Payment {
 		this.description = description;
 	}
 	
+	public Payment(Integer id, String description) {
+		this.id = id;
+		this.description = description;
+	}
+	
 	public Payment() {
 		
 	}

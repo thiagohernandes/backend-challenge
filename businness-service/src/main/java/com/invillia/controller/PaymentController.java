@@ -23,15 +23,15 @@ import com.invillia.service.PaymentService;
 public class PaymentController {
 
 	@Autowired
-	PaymentService PaymentService;
+	PaymentService paymentService;
 	
 	@GetMapping(value="/all")
 	public List<Payment> allPayments(){
-		return PaymentService.allPayments();
+		return paymentService.allPayments();
 	}
 	
 	@GetMapping(value="/{id}")
 	public Optional<Payment> paymentById(@PathVariable Integer id){
-		return PaymentService.paymentById(id);
+		return paymentService.paymentById(id);
 	}
 }

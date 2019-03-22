@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,11 +33,6 @@ public class ProductController {
 	@GetMapping(value="/{id}")
 	public Optional<Product> productById(@PathVariable Integer id){
 		return productService.productById(id);
-	}
-	
-	@PostMapping(value="/ids")
-	public List<Product> productById(@RequestBody List<Integer> ids){
-		return productService.productsByListIds(ids);
 	}
 	
 }
