@@ -1,1 +1,2 @@
-Observar o tempo que é curto de expiração dos Tokens. Caso seja necessário, pode-se alterar.
+## Observar o tempo que é curto de expiração dos Tokens. Caso seja necessário, pode-se alterar.
+### Classe para alteração: TokenAuthenticationService > atributo EXPIRATIONTIME
