@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.invillia.config.RestClient;
 import com.invillia.model.Order;
 import com.invillia.model.OrderItem;
 import com.invillia.model.Payment;
@@ -27,6 +30,9 @@ import com.invillia.util.Util;
 @Service
 @Transactional
 public class OrderService {
+	
+	@Autowired
+	RestClient restClient;
 	
 	@Autowired
 	RestTemplate template;
@@ -63,23 +69,28 @@ public class OrderService {
 	}
 	
 	public Optional<Order> getOrderById(Integer id) {
+		
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", restClient.getRequestHeaderBearer());
+		
 		List<OrderItem> listOrderItens = orderItemRepository.getItensOrderByIdOrder(id);
 		if (listOrderItens != null) {
 			if (listOrderItens.size() > 0) {
 				listOrderItens.stream()
 					  .forEach(item -> item
-							  .setDescriptionProduct(template.getForObject(util.URL_BUSINESS_PRODUCTS + "/{id}", 
-									  				 Product.class, item.getIdProduct())
-									  .getDescription()));
+							  .setDescriptionProduct(
+									  template
+									  .exchange(util.URL_BUSINESS_PRODUCTS + "/{id}", HttpMethod.GET, entity, Product.class, item.getIdProduct()).getBody().getDescription())
+									  );
 			}
 		}
 		Optional<Order> order = orderRepository.findById(id);
 		
 		if (order.isPresent()) {
 			Payment payment = new Payment();
-			payment = template.getForObject(util.URL_BUSINESS_PAYMENTS + "/{id}", Payment.class, order.get().getIdPayment());
+			
+			payment = template.exchange(util.URL_BUSINESS_PAYMENTS + "/{id}", HttpMethod.GET, entity, Payment.class, order.get().getIdPayment()).getBody();
 			Store store = new Store();
-			store = template.getForObject(util.URL_BUSINESS_STORES + "/{id}", Store.class, order.get().getIdStore());
+			store = template.exchange(util.URL_BUSINESS_STORES + "/{id}", HttpMethod.GET, entity, Store.class, order.get().getIdStore()).getBody();
 			
 			order.get().setPayment(payment);
 			order.get().setStore(store);
@@ -96,5 +107,7 @@ public class OrderService {
 	public void updateOrderConfirmationDate(Date dateConfirmation, Integer idOrder) {
 		orderRepository.updateConfirmationOrder(util.handleDateTemporal(dateConfirmation.getTime()), idOrder);
 	}
+	
+	
 
 }

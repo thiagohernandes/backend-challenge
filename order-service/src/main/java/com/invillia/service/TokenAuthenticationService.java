@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-
+import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,13 +18,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * @since 22-03-2019
  * @author: Thiago Hernandes de Souza
  * */
-
+@Component
 public class TokenAuthenticationService {
-
+	
     private static final long EXPIRATIONTIME = 1800000; // 30 minutos
     private static final String SECRET = "InvilliaSecret";
     private static final String TOKEN_PREFIX = "Bearer";
     private static final String HEADER_STRING = "Authorization";
+    public static String GENERATE_TOKEN = "";
 
     public static void addAuthentication(HttpServletResponse res, String username) {
         String JWT = Jwts.builder()
@@ -37,6 +38,7 @@ public class TokenAuthenticationService {
         res.addHeader(HEADER_STRING, token);
 
         try {
+        	GENERATE_TOKEN = token;
             res.getOutputStream().print(token);
         } catch (IOException e) {
             e.printStackTrace();
